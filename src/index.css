@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Prevent horizontal scroll on mobile */
+    overflow-x: hidden;
+  }
+
+  body {
+    @apply bg-white text-brown-800 font-sans antialiased;
+    -webkit-tap-highlight-color: transparent;
+    /* Prevent content jumping on mobile when keyboard opens */
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 { @apply font-serif; }
+
+  /* Bigger tap targets on mobile */
+  button, a, [role="button"] {
+    touch-action: manipulation;
+  }
+
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-gold-500;
+  }
+
+  /* Remove input zoom on iOS (inputs need font-size ≥ 16px) */
+  input, textarea, select {
+    font-size: 16px;
+  }
+  @media (min-width: 640px) {
+    input, textarea, select {
+      font-size: 14px;
+    }
+  }
+}
+
+@layer components {
+  /* ── Buttons ── */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+           px-6 py-3 rounded-full
+           bg-gold-500 text-white font-sans text-sm font-semibold
+           transition-all duration-200
+           hover:bg-gold-600 active:scale-95
+           disabled:opacity-50 disabled:cursor-not-allowed
+           focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500
+           min-h-[48px];
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2
+           px-6 py-3 rounded-full border-2 border-gold-500
+           text-gold-600 font-sans text-sm font-semibold
+           transition-all duration-200
+           hover:bg-gold-500 hover:text-white active:scale-95
+           disabled:opacity-50 disabled:cursor-not-allowed
+           min-h-[48px];
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2
+           px-4 py-2.5 rounded-lg
+           text-brown-800 font-sans text-sm font-medium
+           transition-all duration-150
+           hover:bg-gray-100 active:scale-95
+           min-h-[44px];
+  }
+
+  /* ── Cards ── */
+  .card {
+    @apply bg-white rounded-2xl shadow-card border border-gray-100;
+  }
+
+  /* ── Inputs ── */
+  .input-field {
+    @apply w-full px-4 py-3 bg-white border border-gray-200 rounded-xl
+           text-brown-800 placeholder-gray-400 font-sans
+           transition-colors duration-150
+           focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-200
+           min-h-[48px];
+  }
+
+  /* ── Section typography ── */
+  .section-title {
+    @apply font-serif text-2xl sm:text-3xl md:text-4xl text-brown-800 font-semibold tracking-wide;
+  }
+
+  .section-subtitle {
+    @apply font-sans text-xs sm:text-sm text-gold-500 tracking-widest uppercase;
+  }
+
+  /* ── Skeleton ── */
+  .skeleton {
+    @apply bg-gray-200 rounded animate-skeleton-pulse;
+  }
+}
+
+/* Custom scrollbar — desktop only */
+@media (min-width: 768px) {
+  ::-webkit-scrollbar       { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: #F5F5F5; }
+  ::-webkit-scrollbar-thumb { background: #C9920C; border-radius: 3px; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
