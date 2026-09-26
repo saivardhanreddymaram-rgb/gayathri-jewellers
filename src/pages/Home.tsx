@@ -140,6 +140,8 @@ interface ProductSectionProps {
 
 function ProductSection({ title, subtitle, products, loading, error, onRetry, viewAllLink }: ProductSectionProps) {
   const navigate = useNavigate();
+  const safeProducts = products || [];
+  
   return (
     <section className="py-12 border-t border-gray-100 bg-white" aria-label={title}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -155,14 +157,14 @@ function ProductSection({ title, subtitle, products, loading, error, onRetry, vi
 
         {loading && <ProductGridSkeleton count={4} />}
         {!loading && error && <ErrorState message={error} onRetry={onRetry} />}
-        {!loading && !error && products.length === 0 && (
+        {!loading && !error && safeProducts.length === 0 && (
           <div className="text-center py-12">
             <p className="font-serif text-lg text-gray-400">Coming soon — check back shortly.</p>
           </div>
         )}
-        {!loading && !error && products.length > 0 && (
+        {!loading && !error && safeProducts.length > 0 && (
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
-            {products.slice(0, 8).map(p => <ProductCard key={p.id} product={p} />)}
+            {safeProducts.slice(0, 8).map(p => <ProductCard key={p.id} product={p} />)}
           </div>
         )}
 
@@ -258,21 +260,30 @@ export function HomePage() {
 
   const fetchTV = useCallback(async () => {
     setLoadingTV(true); setErrorTV(null);
-    try { const { products } = await getTopValuableProducts(); setTopValuable(products); }
+    try { 
+      const result = await getTopValuableProducts(); 
+      setTopValuable(result?.products || []); 
+    }
     catch { setErrorTV('Could not load products.'); }
     finally { setLoadingTV(false); }
   }, []);
 
   const fetchFt = useCallback(async () => {
     setLoadingFt(true); setErrorFt(null);
-    try { const { products } = await getFeaturedProducts(); setFeatured(products); }
+    try { 
+      const result = await getFeaturedProducts(); 
+      setFeatured(result?.products || []); 
+    }
     catch { setErrorFt('Could not load products.'); }
     finally { setLoadingFt(false); }
   }, []);
 
   const fetchBS = useCallback(async () => {
     setLoadingBS(true); setErrorBS(null);
-    try { const { products } = await getBestsellerProducts(); setBestsellers(products); }
+    try { 
+      const result = await getBestsellerProducts(); 
+      setBestsellers(result?.products || []); 
+    }
     catch { setErrorBS('Could not load products.'); }
     finally { setLoadingBS(false); }
   }, []);
