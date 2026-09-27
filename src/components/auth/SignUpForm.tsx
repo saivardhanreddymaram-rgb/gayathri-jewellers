@@ -72,7 +72,7 @@ export function SignUpForm({ onOTPSent }: SignUpFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="space-y-5">
+    <form onSubmit={handleSubmit} noValidate className="space-y-4 sm:space-y-5">
       <Input
         label="Full Name"
         type="text"
@@ -113,7 +113,7 @@ export function SignUpForm({ onOTPSent }: SignUpFormProps) {
       />
 
       {serverError && (
-        <p role="alert" className="text-sm text-red-600 font-sans bg-red-50 border border-red-200 rounded-lg px-4 py-3">
+        <p role="alert" className="text-xs sm:text-sm text-red-600 font-sans bg-red-50 border border-red-200 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3">
           {serverError}
         </p>
       )}

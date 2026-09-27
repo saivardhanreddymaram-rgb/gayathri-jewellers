@@ -7,6 +7,9 @@
     scroll-behavior: smooth;
     /* Prevent horizontal scroll on mobile */
     overflow-x: hidden;
+    /* Better font rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
@@ -14,6 +17,9 @@
     -webkit-tap-highlight-color: transparent;
     /* Prevent content jumping on mobile when keyboard opens */
     overflow-x: hidden;
+    /* Ensure min height for proper mobile layout */
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
   }
 
   h1, h2, h3, h4, h5, h6 { @apply font-serif; }
@@ -21,6 +27,8 @@
   /* Bigger tap targets on mobile */
   button, a, [role="button"] {
     touch-action: manipulation;
+    /* Minimum touch target size for accessibility */
+    min-height: 44px;
   }
 
   *:focus-visible {
@@ -36,34 +44,51 @@
       font-size: 14px;
     }
   }
+
+  /* Prevent text overflow on mobile */
+  * {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Images responsive by default */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 }
 
 @layer components {
+  /* ── Responsive Container ── */
+  .container-responsive {
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
   /* ── Buttons ── */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2
-           px-6 py-3 rounded-full
+           px-4 sm:px-6 py-2.5 sm:py-3 rounded-full
            bg-gold-500 text-white font-sans text-sm font-semibold
            transition-all duration-200
            hover:bg-gold-600 active:scale-95
            disabled:opacity-50 disabled:cursor-not-allowed
            focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500
-           min-h-[48px];
+           min-h-[44px] sm:min-h-[48px];
   }
 
   .btn-outline {
     @apply inline-flex items-center justify-center gap-2
-           px-6 py-3 rounded-full border-2 border-gold-500
+           px-4 sm:px-6 py-2.5 sm:py-3 rounded-full border-2 border-gold-500
            text-gold-600 font-sans text-sm font-semibold
            transition-all duration-200
            hover:bg-gold-500 hover:text-white active:scale-95
            disabled:opacity-50 disabled:cursor-not-allowed
-           min-h-[48px];
+           min-h-[44px] sm:min-h-[48px];
   }
 
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2
-           px-4 py-2.5 rounded-lg
+           px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg
            text-brown-800 font-sans text-sm font-medium
            transition-all duration-150
            hover:bg-gray-100 active:scale-95
@@ -72,21 +97,21 @@
 
   /* ── Cards ── */
   .card {
-    @apply bg-white rounded-2xl shadow-card border border-gray-100;
+    @apply bg-white rounded-xl sm:rounded-2xl shadow-card border border-gray-100;
   }
 
   /* ── Inputs ── */
   .input-field {
-    @apply w-full px-4 py-3 bg-white border border-gray-200 rounded-xl
-           text-brown-800 placeholder-gray-400 font-sans
+    @apply w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-xl
+           text-brown-800 placeholder-gray-400 font-sans text-base
            transition-colors duration-150
            focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-200
-           min-h-[48px];
+           min-h-[44px] sm:min-h-[48px];
   }
 
   /* ── Section typography ── */
   .section-title {
-    @apply font-serif text-2xl sm:text-3xl md:text-4xl text-brown-800 font-semibold tracking-wide;
+    @apply font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl text-brown-800 font-semibold tracking-wide;
   }
 
   .section-subtitle {
@@ -96,6 +121,19 @@
   /* ── Skeleton ── */
   .skeleton {
     @apply bg-gray-200 rounded animate-skeleton-pulse;
+  }
+
+  /* ── Responsive Grid ── */
+  .grid-responsive-2 {
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-4;
+  }
+
+  .grid-responsive-3 {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6;
+  }
+
+  .grid-responsive-4 {
+    @apply grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5;
   }
 }
 

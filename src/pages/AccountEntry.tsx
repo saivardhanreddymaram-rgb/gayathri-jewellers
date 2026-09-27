@@ -101,7 +101,7 @@ export function AccountEntryPage() {
         </div>
         <div className="relative text-center space-y-6 max-w-sm">
           <div className="flex flex-col items-center gap-3">
-            <img src="/logo.svg" alt="Gayathri Jewellers" className="w-20 h-20 rounded-full" />
+            <img src="/logo-premium.png" alt="Gayathri Jewellers" className="w-20 h-20 rounded-full object-cover" />
             <div>
               <span className="block font-serif text-4xl font-bold text-white leading-tight">Gayathri</span>
               <span className="block font-sans text-xs tracking-[0.3em] uppercase text-gold-400 mt-1">Jewellers</span>
@@ -118,15 +118,15 @@ export function AccountEntryPage() {
       </div>
 
       {/* ── Right form panel ── */}
-      <div className="flex-1 flex flex-col items-center justify-center min-h-screen lg:min-h-0 px-4 py-10 bg-white">
+      <div className="flex-1 flex flex-col items-center justify-center min-h-screen lg:min-h-0 px-4 sm:px-6 py-8 sm:py-10 bg-white">
 
         {/* Mobile logo */}
-        <div className="lg:hidden mb-8">
+        <div className="lg:hidden mb-6 sm:mb-8">
           <Logo size="lg" variant="dark" />
         </div>
 
         <div className="w-full max-w-md">
-          <div className="bg-white rounded-2xl shadow-card border border-gray-100 p-7 sm:p-9">
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-card border border-gray-100 p-5 sm:p-7 md:p-9">
 
             {stage.type === 'otp' ? (
               /* ── OTP Verify ── */
@@ -144,14 +144,14 @@ export function AccountEntryPage() {
               /* ── Sign Up / Sign In ── */
               <>
                 {/* Tabs */}
-                <div className="flex rounded-xl bg-gray-100 p-1 mb-7" role="tablist" aria-label="Account options">
+                <div className="flex rounded-lg sm:rounded-xl bg-gray-100 p-1 mb-6 sm:mb-7" role="tablist" aria-label="Account options">
                   {(['signin', 'signup'] as Tab[]).map(t => (
                     <button
                       key={t}
                       role="tab"
                       aria-selected={tab === t}
                       onClick={() => setTab(t)}
-                      className={`flex-1 py-2.5 rounded-lg text-sm font-sans font-semibold transition-all duration-150 ${
+                      className={`flex-1 py-2.5 sm:py-3 rounded-lg text-sm font-sans font-semibold transition-all duration-150 min-h-[44px] ${
                         tab === t
                           ? 'bg-white text-brown-800 shadow-sm'
                           : 'text-gray-400 hover:text-brown-800'
@@ -163,11 +163,11 @@ export function AccountEntryPage() {
                 </div>
 
                 {/* Heading */}
-                <div className="mb-6">
-                  <h1 className="font-serif text-2xl text-brown-800 font-bold">
+                <div className="mb-5 sm:mb-6">
+                  <h1 className="font-serif text-xl sm:text-2xl text-brown-800 font-bold">
                     {tab === 'signup' ? 'Create your account' : 'Welcome back'}
                   </h1>
-                  <p className="text-sm text-gray-500 font-sans mt-1">
+                  <p className="text-xs sm:text-sm text-gray-500 font-sans mt-1.5 sm:mt-2">
                     {tab === 'signup'
                       ? 'Sign up to shop, track orders, and save your wishlist.'
                       : 'Sign in to continue shopping with Gayathri Jewellers.'}
@@ -181,7 +181,7 @@ export function AccountEntryPage() {
                 }
 
                 {/* Switch */}
-                <p className="mt-6 text-center text-sm text-gray-400 font-sans">
+                <p className="mt-5 sm:mt-6 text-center text-xs sm:text-sm text-gray-400 font-sans">
                   {tab === 'signup' ? (
                     <>Already have an account?{' '}
                       <button onClick={() => setTab('signin')} className="text-gold-600 hover:text-gold-700 font-semibold underline underline-offset-2 transition-colors">
