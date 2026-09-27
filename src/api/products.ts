@@ -13,8 +13,16 @@ export async function getProducts(filters: ProductFilters = {}) {
   if (filters.page) params.page = filters.page;
   if (filters.pageSize) params.pageSize = filters.pageSize;
 
-  const { data } = await apiClient.get('/products', { params });
-  return data as PaginatedResponse<Product>;
+  try {
+    const { data } = await apiClient.get('/products', { params });
+    const result = data as PaginatedResponse<Product>;
+    return {
+      ...result,
+      data: Array.isArray(result?.data) ? result.data : []
+    };
+  } catch (error) {
+    return { data: [], total: 0, page: 1, pageSize: 20 } as PaginatedResponse<Product>;
+  }
 }
 
 export async function getProductBySlug(slug: string) {
@@ -23,23 +31,43 @@ export async function getProductBySlug(slug: string) {
 }
 
 export async function getFeaturedProducts() {
-  const { data } = await apiClient.get('/products/featured');
-  return data as { products: Product[] };
+  try {
+    const { data } = await apiClient.get('/products/featured');
+    const result = data as { products: Product[] };
+    return { products: Array.isArray(result?.products) ? result.products : [] };
+  } catch (error) {
+    return { products: [] };
+  }
 }
 
 export async function getBestsellerProducts() {
-  const { data } = await apiClient.get('/products/bestsellers');
-  return data as { products: Product[] };
+  try {
+    const { data } = await apiClient.get('/products/bestsellers');
+    const result = data as { products: Product[] };
+    return { products: Array.isArray(result?.products) ? result.products : [] };
+  } catch (error) {
+    return { products: [] };
+  }
 }
 
 export async function getTopValuableProducts() {
-  const { data } = await apiClient.get('/products/top-valuable');
-  return data as { products: Product[] };
+  try {
+    const { data } = await apiClient.get('/products/top-valuable');
+    const result = data as { products: Product[] };
+    return { products: Array.isArray(result?.products) ? result.products : [] };
+  } catch (error) {
+    return { products: [] };
+  }
 }
 
 export async function getRelatedProducts(slug: string) {
-  const { data } = await apiClient.get(`/products/${slug}/related`);
-  return data as { products: Product[] };
+  try {
+    const { data } = await apiClient.get(`/products/${slug}/related`);
+    const result = data as { products: Product[] };
+    return { products: Array.isArray(result?.products) ? result.products : [] };
+  } catch (error) {
+    return { products: [] };
+  }
 }
 
 // ─── Admin product endpoints ──────────────────────────────────────────────────

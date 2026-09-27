@@ -66,11 +66,14 @@ export function useProductFilters(defaults: Partial<ProductFilters> = {}) {
     setError(null);
     try {
       const result = await getProducts(f);
-      setProducts(result.data);
-      setTotal(result.total);
+      const safeData = Array.isArray(result?.data) ? result.data : [];
+      const safeTotal = typeof result?.total === 'number' ? result.total : 0;
+      setProducts(safeData);
+      setTotal(safeTotal);
     } catch (err) {
       setError(extractErrorMessage(err));
       setProducts([]);
+      setTotal(0);
     } finally {
       setLoading(false);
     }
@@ -78,7 +81,8 @@ export function useProductFilters(defaults: Partial<ProductFilters> = {}) {
 
   useEffect(() => {
     fetchProducts(filters);
-  }, [filters, fetchProducts]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters]);
 
   const activeFilterCount = [
     filters.audience && !defaults.audience,
